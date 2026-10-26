@@ -1,0 +1,25 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+import BuscadorNoticias from '../components/BuscadorDeNoticias.jsx';
+
+const todasLasNoticias = await getCollection('noticias');
+
+const noticiasOrdenadas = todasLasNoticias.sort(
+  (a, b) => new Date(b.data.publiDate).getTime() - new Date(a.data.publiDate).getTime()
+);
+---
+
+<MainLayout title="Inicio - Últimas noticias del Octágono">
+  {/* Cambiado className por class */}
+  <section class="mb-10 text-center">
+    <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tight mb-3">
+      El Universo de la <span class="text-red-600">UFC</span> al día
+    </h1>
+    <p class="text-neutral-400 max-w-xl mx-auto">
+      Noticias, análisis y cobertura en directo de la UFC.
+    </p>
+  </section>
+
+  <BuscadorNoticias client:load noticias={noticiasOrdenadas} />
+</MainLayout>

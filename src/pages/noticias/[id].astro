@@ -1,0 +1,54 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+// 1. Generamos las rutas para cada noticia existente
+export async function getStaticPaths() {
+  const noticias = await getCollection('noticias');
+  return noticias.map((noticia) => ({
+    params: { id: noticia.id },
+    props: { noticia },
+  }));
+}
+
+const { noticia } = Astro.props;
+// En Astro 5 usamos render() para procesar el Markdown/MDX
+const { Content } = await render(noticia);
+---
+
+<MainLayout title={noticia.data.titulo}>
+  <article class="max-w-3xl mx-auto py-6">
+    {/* Cabecera del artículo */}
+    <div class="mb-8">
+      <a href="/" class="text-sm text-red-500 font-bold hover:underline mb-4 inline-block">
+        &larr; Volver a noticias
+      </a>
+      <h1 class="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4 leading-tight">
+        {noticia.data.titulo}
+      </h1>
+      <p class="text-xl text-neutral-400 mb-6 font-medium">
+        {noticia.data.descripcion}
+      </p>
+
+      <div class="flex items-center gap-4 text-xs text-neutral-400 border-y border-neutral-800 py-3">
+        <span>Por <strong class="text-neutral-200">{noticia.data.author}</strong></span>
+        <span>&bull;</span>
+        <span>{new Date(noticia.data.publiDate).toLocaleDateString()}</span>
+      </div>
+    </div>
+
+    {/* Imagen destacada */}
+    <div class="mb-10 rounded-xl overflow-hidden border border-neutral-800">
+      <img 
+        src={noticia.data.image} 
+        alt={noticia.data.titulo} 
+        class="w-full h-auto max-h-112.5 object-cover"
+      />
+    </div>
+
+    {/* Contenido Renderizado del Markdown / MDX */}
+    <div class="prose prose-invert max-w-none text-neutral-300 space-y-4">
+      <Content />
+    </div>
+  </article>
+</MainLayout>

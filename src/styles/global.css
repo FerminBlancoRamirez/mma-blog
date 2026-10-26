@@ -1,0 +1,21 @@
+@import "tailwindcss";
+/* Estilos por defecto para el contenido de los artículos/noticias */
+.prose h1 {
+  @apply text-3xl md:text-4xl font-black text-white mt-8 mb-4 tracking-tight uppercase border-b border-neutral-800 pb-2;
+}
+
+.prose h2 {
+  @apply text-xl md:text-2xl font-bold text-red-500 mt-6 mb-3 tracking-wide;
+}
+
+.prose p {
+  @apply text-neutral-300 leading-relaxed mb-4 font-normal text-base md:text-lg;
+}
+
+.prose strong {
+  @apply font-bold text-white;
+}
+
+.prose ul, .prose ol {
+  @apply my-4 pl-6 space-y-2 text-neutral-300;
+}
