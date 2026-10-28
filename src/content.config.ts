@@ -10,6 +10,7 @@ const noticias = defineCollection({
         author: z.string(),
         tag: z.array(z.string()),
         image: z.string(),
+        destacado: z.boolean(),
     })
 });
 

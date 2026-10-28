@@ -1,25 +1,29 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
-import BuscadorNoticias from '../components/BuscadorDeNoticias.jsx';
+import BuscadorDeNoticias from '../components/BuscadorDeNoticias.jsx';
 
 const todasLasNoticias = await getCollection('noticias');
 
-const noticiasOrdenadas = todasLasNoticias.sort(
-  (a, b) => new Date(b.data.publiDate).getTime() - new Date(a.data.publiDate).getTime()
-);
+// Filtrar noticias de los últimos 14 días
+const haceDosSemanas = new Date();
+haceDosSemanas.setDate(haceDosSemanas.getDate() - 14);
+
+const ultimasNoticias = todasLasNoticias
+  .filter((noticia) => new Date(noticia.data.publiDate) >= haceDosSemanas)
+  .sort((a, b) => new Date(b.data.publiDate).getTime() - new Date(a.data.publiDate).getTime());
 ---
 
-<MainLayout title="Inicio - Últimas noticias del Octágono">
-  {/* Cambiado className por class */}
+<MainLayout title="Última Hora | MMA Pulse">
   <section class="mb-10 text-center">
     <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tight mb-3">
-      El Universo de la <span class="text-red-600">UFC</span> al día
+      Noticias de <span class="text-red-600">Última Hora</span>
     </h1>
     <p class="text-neutral-400 max-w-xl mx-auto">
-      Noticias, análisis y cobertura en directo de la UFC.
+      Lo más reciente del octágono ocurrido en las últimas 2 semanas.
     </p>
   </section>
 
-  <BuscadorNoticias client:load noticias={noticiasOrdenadas} />
+  {/* Buscador reactivo únicamente sobre las noticias de las últimas 2 semanas */}
+  <BuscadorDeNoticias client:load noticias={ultimasNoticias} />
 </MainLayout>

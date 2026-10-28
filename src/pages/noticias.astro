@@ -1,0 +1,24 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+import ExploradorNoticias from '../components/ExploradorNoticias.jsx';
+
+const todasLasNoticias = await getCollection('noticias');
+
+const noticiasOrdenadas = todasLasNoticias.sort(
+  (a, b) => new Date(b.data.publiDate).getTime() - new Date(a.data.publiDate).getTime()
+);
+---
+
+<MainLayout title="Archivo de Noticias | MMA Pulse">
+  <section class="mb-8">
+    <h1 class="text-3xl md:text-4xl font-black uppercase tracking-tight mb-2">
+      Todas las <span class="text-red-600">Noticias</span>
+    </h1>
+    <p class="text-neutral-400">
+      Explora el archivo completo filtrando por eventos (ej: UFC 333), peso o etiquetas.
+    </p>
+  </section>
+
+  <ExploradorNoticias client:load noticias={noticiasOrdenadas} />
+</MainLayout>
