@@ -36,7 +36,7 @@ export default function ExploradorNoticias({ noticias = [] }) {
       <div className="bg-neutral-800 p-4 rounded-xl border border-neutral-700">
         <input
           type="text"
-          placeholder="Buscar por evento (ej: UFC333), tematica (ej: Lesiones) o luchador..."
+          placeholder="Buscar por evento (ej: UFC333), tematica (ej: Lesiones), luchador (ej: Alexander Volkanovski) o peso (ej: Peso Pluma)  "
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
           className="w-full bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-3 text-white placeholder-neutral-500 focus:outline-none focus:border-red-600 transition"
