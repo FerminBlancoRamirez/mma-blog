@@ -40,6 +40,12 @@ export default function BuscadorDeNoticias({ noticias = [] }) {
                   alt={noticia.data.titulo}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-300" 
                 />
+                {/* Badge con la etiqueta secundaria si existe */}
+                    {noticia.data.tag?.[1] && (
+                      <span className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-black uppercase px-2 py-1 rounded shadow">
+                        {noticia.data.tag[1]}
+                      </span>
+                    )}
               </div>
               <div className="p-5 flex flex-col grow justify-between">
                 <div>
